@@ -1,12 +1,13 @@
 # Python 3.7.3
 from bs4 import BeautifulSoup
+from urllib.parse import quote
 from urllib.request import urlopen
 from urllib.request import Request
 import random
 import csv
 
 # 検索キーワード
-keyword = "abc"
+keyword = "証券"
 # googleサイト
 url = 'https://www.google.com.hk/search?hl=ja&gbv=1&q={}&start={}&sa=N'
 # User-Agent
@@ -34,7 +35,7 @@ def getContent(myUrl):
 '''クローラ'''
 def search(pageCnt):
     # サイトレスポンス
-    myUrl = url.format(keyword, pageCnt)
+    myUrl = url.format(quote(keyword, 'utf-8'), pageCnt)
     result = getContent(myUrl)
     html = BeautifulSoup(result, 'html.parser')
 
