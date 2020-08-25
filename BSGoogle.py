@@ -1,15 +1,17 @@
-# Python 3.7.3
-from bs4 import BeautifulSoup
-from urllib.parse import quote
-from urllib.request import urlopen
-from urllib.request import Request
-import random
+# python 3.8.5
+# -*- coding: utf-8 -*-
 import csv
+import random
+from urllib.parse import quote
+from urllib.request import Request, urlopen
+
+from bs4 import BeautifulSoup
 
 # 検索キーワード
 keyword = "証券"
 # googleサイト
-url = 'https://www.google.com.hk/search?hl=ja&gbv=1&q={}&start={}&sa=N'
+url = 'http://www.google.com.hk/search?hl=ja&gbv=1&q={}&start={}&sa=N'
+
 # User-Agent
 my_headers = [
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36",
@@ -37,20 +39,20 @@ def search(pageCnt):
     # サイトレスポンス
     myUrl = url.format(quote(keyword, 'utf-8'), pageCnt)
     result = getContent(myUrl)
-    html = BeautifulSoup(result, 'html.parser')
+    soup = BeautifulSoup(result, 'html.parser')
 
     # 項目
-    itemList = html.select('div .BNeawe.vvjwJb.AP7Wnd')
+    itemList = soup.select('div .BNeawe.vvjwJb.AP7Wnd')
     # URL
-    linkList = html.select('a[href^="/url?q="]')
+    linkList = soup.select('a[href^="/url?q="]')
     # CSV出力用
     resultList = []
     for link in linkList:
         for item in itemList:
-            if item in link:
+            if (item.text in link.text):
                 line = []
                 # 項目
-                line.append(item.string.strip())
+                line.append(item.text.strip())
                 # URL
                 href = link.get('href')
                 # 【/url?q=】から、【&】まで
