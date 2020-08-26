@@ -18,7 +18,7 @@ while (' ' in text) or ('\n\n' in text):
 text = text.replace(chr(9450), '0')
 
 # ①~⑳ ⇒ 1~20
-for num in range(9312,9332):
-    text = text.replace(chr(num),str(num - 9311))
+for num in range(9312, 9332):
+    text = text.replace(chr(num), str(num - 9311))
 
 print(text)
