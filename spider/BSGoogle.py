@@ -1,6 +1,7 @@
 # python 3.8.5
 # -*- coding: utf-8 -*-
 import csv
+import os
 import random
 from urllib.parse import quote
 from urllib.request import Request, urlopen
@@ -69,7 +70,8 @@ for i in range(0, 20, 10):
     csvList = csvList + search(i)
 
 # CSV出力処理
-csvFile = open('result.csv', 'w', encoding='utf-8')
+path = os.path.split(os.path.realpath(__file__))[0]
+csvFile = open(path + '/result.csv', 'w', encoding='utf-8')
 writer = csv.writer(csvFile, lineterminator='\n')
 writer.writerows(csvList)
 csvFile.close()
