@@ -1,5 +1,5 @@
 # MyPython-Demo
 ### spider
-- googleのキーワード検索スパイダー
+- クローラー
 ### ocr
 - 画像認識

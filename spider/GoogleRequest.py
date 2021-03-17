@@ -69,20 +69,25 @@ def search(key_word, page_cnt):
 '''CSVファイルを出力'''
 
 
-def csv_output(key_word):
-    # CSV内容（前2ページ）
-    csv_list = []
-    for page_cnt in range(0, 20, 10):
-        # キーワードを検索
-        csv_list = csv_list + search(key_word, page_cnt)
-
-    # CSV出力処理
+def csv_output(csv_list):
     path = os.path.split(os.path.realpath(__file__))[0]
-    csv_file = open(path + '/result.csv', 'w', encoding='utf-8')
+    csv_file = open(path + '/google_result.csv', 'w', encoding='utf-8')
     writer = csv.writer(csv_file, lineterminator='\n')
     writer.writerows(csv_list)
     csv_file.close()
 
 
+'''メインメソッド'''
+
+
+def main(key_word):
+    csv_list = []
+    for page_cnt in range(0, 20, 10):
+        # キーワードを検索
+        csv_list.extend(search(key_word, page_cnt))
+
+    csv_output(csv_list)
+
+
 # googleからキーワードを検索してから、csvファイルを出力する
-csv_output("証券")
+main("証券")
